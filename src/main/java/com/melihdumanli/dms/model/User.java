@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "tbl_user")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @SequenceGenerator(name = "sq_user_id",sequenceName = "sq_user_id",allocationSize = 1,initialValue = 1)
@@ -42,4 +42,38 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserActivityLog> activities;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
