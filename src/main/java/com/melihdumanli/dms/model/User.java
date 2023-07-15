@@ -1,11 +1,17 @@
 package com.melihdumanli.dms.model;
 
+import com.melihdumanli.dms.constant.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -23,6 +29,17 @@ public class User {
     private String lastname;
     private String email;
     private String password;
+    private Date createDate;
+    private Date updateDate;
+    private boolean deleteFlag;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserActivityLog> activities;
 
 }
