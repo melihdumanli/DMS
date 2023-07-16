@@ -45,7 +45,7 @@ public class JwtSecurity {
                     .withAudience()
                     .withClaim("username", userDetails.getUsername())
                     .withIssuer("com.melihdumanli.dms")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + 300000))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + 1800000))
                     .withIssuedAt(new Date())
                     .sign(getAlgorithm());
         } catch (Exception e) {

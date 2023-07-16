@@ -5,13 +5,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import '../assets/styles/login.scss';
 import "react-toastify/dist/ReactToastify.css";
 
-interface LoginProps {
-    handleLogin: (token: string) => void;
-}
 const loginUrl = 'http://localhost:8080/api/v1/auth/login';
 const registerUrl = 'http://localhost:8080/api/v1/auth/register';
 
-const Login: React.FC<LoginProps> = ({ handleLogin }) => {
+const Login: React.FC = () => {
     const [firstname, setFirstName] = useState('')
     const [lastname, setLastName] = useState('')
     const [email, setEmail] = useState('');
@@ -36,6 +33,7 @@ const Login: React.FC<LoginProps> = ({ handleLogin }) => {
                 .then(response => {
                     localStorage.setItem('access_token', response.data.access_token);
                     localStorage.setItem('refresh_token', response.data.refresh_token);
+                    navigate('/home', { replace: true });
                 })
                 .catch(error => {
                     setError("Wrong email or password. Please try again.")

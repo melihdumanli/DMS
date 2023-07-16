@@ -1,33 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 
+const root = createRoot(document.getElementById("root")!);
+
 const App: React.FC = () => {
     const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
 
-    const handleLogin = (token: string) => {
-        console.log(token,)
-    }
+    useEffect(() => {
+        console.log(token);
+    }, []);
 
     const handleLogout = () => {
-        // Clear the token on logout
         setToken(null);
         localStorage.removeItem('token');
     };
 
-    const isAuthenticated = !!token;
-
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Login handleLogin={handleLogin} />}>
-                    {!isAuthenticated && <Route path="/login" element={<Login handleLogin={handleLogin} />} />}
-                    {isAuthenticated && <Route path="/profile" element={<Profile />} />}
-                    {isAuthenticated && <Route path="/home" element={<Home />} />}
-                    {!isAuthenticated && <Route path="/*" element={<Navigate to="/login" replace />} />}
-                </Route>
+                <Route path="/" element={<Login />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/home" element={<Home />} />
             </Routes>
         </BrowserRouter>
     );
